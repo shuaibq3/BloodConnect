@@ -24,7 +24,7 @@
 - **Language**: TypeScript (Strict mode).
 - **Backend**: Node.js.
 - **Frontend**: React (Web) & React Native (Mobile).
-- **Database**: PostgreSQL (via Docker).
+- **Database**: SQL (PostgreSQL by default, configurable via Sequelize).
 
 ## 4. Coding Standards
 - **Exports**: Default export is preferred for files with a single primary class, interface, or object.
