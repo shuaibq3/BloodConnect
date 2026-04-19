@@ -1,0 +1,13 @@
+# Cursor Rules for BloodConnect
+
+> [!IMPORTANT]
+> **MASTER GUIDELINES**: Refer to [AI.md](./AI.md) for detailed architecture, coding standards, and project rules.
+
+## Quick Reference
+- **Business Logic**: `/server/src`, `/client/src`
+- **Infrastructure**: `/server/infrastructure`
+- **Shared Code**: `/common`
+- **Clients**: Thin implementations in `/client/web` and `/client/mobile`.
+- **Stack**: TS, React, React Native, Postgres (Docker).
+
+Always follow the modular, plugin-based design pattern defined in `AI.md`.
