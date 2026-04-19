@@ -19,6 +19,7 @@ TITLE=${2:-"conversation_$CONV_ID"}
 
 # Sanitize Title for filename
 SAFE_TITLE=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '_' | sed 's/[^a-z0-9_]//g')
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
 if [ -z "$CONV_ID" ]; then
     echo "Error: No conversation logs found."
@@ -26,7 +27,7 @@ if [ -z "$CONV_ID" ]; then
 fi
 
 LOG_SOURCE="$BRAIN_DIR/$CONV_ID/.system_generated/logs/overview.txt"
-LOG_DEST="$PROMPTS_DIR/${SAFE_TITLE}.md"
+LOG_DEST="$PROMPTS_DIR/${TIMESTAMP}-${SAFE_TITLE}.md"
 
 if [ -f "$LOG_SOURCE" ]; then
     node ./scripts/format_logs.js "$LOG_SOURCE" > "$LOG_DEST"

@@ -33,7 +33,10 @@
 ## 5. Conversation & Prompt Logging
 To maintain a historical record of all interactions within the repository:
 - **Directory**: `/prompts`
-- **Default Rule**: The agent **must** automatically log the entire verbatim conversation history at the end of a session, or whenever significant architectural/code changes are completed.
-- **Mechanism**: The agent should run `./scripts/export_logs.sh <id> "<Session Title>"` to ensure the log is captured in Markdown format with a descriptive filename.
-- **Summaries**: Only provide a summary of the conversation if specifically requested by the user. Otherwise, the formatted verbatim log is the primary record.
-- **File Naming**: Logs are saved as `<sanitized_session_title>.md` in the `/prompts` directory.
+- **Mandatory Checkpoints**: The agent **MUST** automatically log the verbatim conversation history when:
+  - A major architectural change is completed (e.g., setting up global ESLint/TS).
+  - A primary feature or module is implemented.
+  - A session reaches a natural stopping point or before ending the conversation.
+- **Mechanism**: Use `./scripts/export_logs.sh <Conversation_ID> "<Descriptive_Title>"` to export logs.
+- **File Naming**: Logs are saved as `YYYYMMDD_HHMMSS-<sanitized_title>.md` in the `/prompts` directory to ensure chronological sorting.
+- **Goal**: Ensure the project context remains persistent and portable across different AI sessions.
