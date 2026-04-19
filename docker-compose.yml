@@ -13,5 +13,22 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    container_name: bloodconnect-server
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=bloodconnect
+      - DB_USER=bloodconnect
+      - DB_PASSWORD=password
+      - DB_PORT=5432
+      - PORT=3000
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:

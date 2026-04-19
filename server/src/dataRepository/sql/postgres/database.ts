@@ -4,7 +4,7 @@ import * as models from './models';
 const modelClasses = Object.values(models).filter((model) => typeof model === 'function');
 
 // This instance can be used by the application and the migration script
-export const sequelize = new Sequelize({
+export default new Sequelize({
   database: process.env.DB_NAME || 'bloodconnect',
   dialect: 'postgres',
   username: process.env.DB_USER || 'bloodconnect',

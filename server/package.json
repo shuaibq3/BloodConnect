@@ -4,17 +4,34 @@
   "description": "BloodConnect Server - Modular & Plugin-based architecture",
   "private": true,
   "workspaces": [
-    "infrastructure/express",
-    "infrastructure/postgres"
+    "infrastructure/express"
   ],
   "main": "infrastructure/express/index.ts",
   "scripts": {
-    "start": "node --env-file=.env dist/infrastructure/express/index.js",
+    "start": "node --env-file=.env dist/server/infrastructure/express/index.js",
     "dev": "ts-node-dev --respawn --transpile-only --watch ../common --env-file=.env infrastructure/express/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "db:create": "cd src/dataRepository/sql/postgres && npx sequelize-cli db:create",
+    "db:migrate": "cd src/dataRepository/sql/postgres && NODE_OPTIONS='-r ts-node/register' npx sequelize-cli db:migrate",
+    "db:up": "npm run db:create || true && npm run db:migrate",
+    "db:rollback": "cd src/dataRepository/sql/postgres && NODE_OPTIONS='-r ts-node/register' npx sequelize-cli db:migrate:undo",
+    "docker:up": "docker compose -f ../docker-compose.yml up",
+    "docker:db": "docker compose -f ../docker-compose.yml up postgres",
+    "docker:server": "docker compose -f ../docker-compose.yml up server",
+    "docker:down": "docker compose -f ../docker-compose.yml down",
+    "docker:build": "docker compose -f ../docker-compose.yml build"
+  },
+  "dependencies": {
+    "pg": "^8.11.5",
+    "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "^6.37.3",
+    "sequelize-typescript": "^2.1.6"
   },
   "devDependencies": {
     "@types/node": "^20.12.7",
+    "sequelize-cli": "^6.6.2",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0"
   }
 }
