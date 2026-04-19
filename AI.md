@@ -4,19 +4,21 @@
 > This is the **Single Source of Truth (SSOT)** for all AI agents (Claude, Cursor, etc.) working on this project. All architectural decisions, coding standards, and directory structures defined here must be followed strictly.
 
 ## 1. Core Principles & Architecture
-- **Modularity**: Everything is built as a plugin/module, including infrastructure.
-- **Strict Separation**: 
-  - **Logic**: Pure business rules and domain services reside in `src` directories. Must be infrastructure-agnostic.
-  - **Infrastructure**: Exposes logic through microservices (HTTP, functions). Resides in `infrastructure` directories.
-- **Shared First**: Any code (types, utils, interfaces) used by both server and client **must** be placed in `/common`.
+- **Modularity**: Everything is built as a plugin/module, including delivery mechanisms and data sources.
+- **Layered Separation**: 
+  - **Application (src/)**: Contains core logic and data access.
+    - **Domain Logic**: Pure business rules and domain services.
+    - **Data Repository**: Defines how data is fetched/stored (SQL, HTTP APIs). Part of the application source as it defines the data contract.
+  - **Infrastructure (infrastructure/)**: Contains **Delivery Mechanisms**. Exposes the application to the outside world (e.g., Express, AWS Lambda, CLI).
+- **Shared First**: Any code used by both server and client **must** be placed in `/common`.
 
 ## 2. Directory Structure
 - `/common`: Shared TypeScript code, types, and utilities.
-- `/server/src`: Domain logic and business rules.
-- `/server/infrastructure`: Microservice wrappers (Express, AWS, GCP, etc.).
+- `/server/src`: Application layer (Domain Logic & Data Repositories).
+- `/server/infrastructure`: Delivery layer (Express, AWS, GCP, etc.).
 - `/client/src`: Shared client logic, state management, and hooks.
-- `/client/web`: React implementation (mechanism to expose the logic).
-- `/client/mobile`: React Native implementation (mechanism to expose the logic).
+- `/client/web`: React web implementation.
+- `/client/mobile`: React Native mobile implementation.
 
 ## 3. Technology Stack
 - **Language**: TypeScript (Strict mode).
@@ -24,13 +26,31 @@
 - **Frontend**: React (Web) & React Native (Mobile).
 - **Database**: PostgreSQL (via Docker).
 
-## 4. Development Guidelines
-- Maintain thin client wrappers; maximize logic sharing in `client/src`.
-- Ensure infrastructure is swappable and modular.
+## 4. Coding Standards
+- **Exports**: Default export is preferred for files with a single primary class, interface, or object.
+- **Types vs. Interfaces**:
+  - Use `type` for pure data structures, state shapes, and DTOs.
+  - Use `interface` for behavioral definitions, contracts, and objects that will be implemented by classes.
+- **Logic Placement**: Maintain thin client wrappers; maximize logic sharing in `client/src`.
+- **Infrastructure**: Ensure infrastructure is swappable and modular.
+
+## 5. Database & DTO Design
+- **Primary Keys**: Prefer UUIDs (v4) for all primary keys.
+- **Timestamps**: All tables should include standard `createdAt` and `updatedAt` timestamps.
+- **Enums**: Use string-based enums for statuses, types, and fixed categories to ensure database readability.
+- **DTOs**:
+  - Reside in `/common/dtos/`.
+  - Should be pure data structures without system timestamps (`createdAt`, `updatedAt`) unless business-critical.
+- **Models**:
+  - Reside in the application layer (`src/dataRepository/...`).
+  - Must implement the `Serializable<Dto>` interface to handle bidirectional mapping.
+  - Use default exports for model classes.
+
+## 6. Development Workflow
 - Use Docker for local database and environment consistency.
 - Refer to `docker-compose.yml` for infrastructure service definitions.
 
-## 5. Conversation & Prompt Logging
+## 7. Conversation & Prompt Logging
 To maintain a historical record of all interactions within the repository:
 - **Directory**: `/prompts`
 - **Mandatory Checkpoints**: The agent **MUST** automatically log the verbatim conversation history when:
