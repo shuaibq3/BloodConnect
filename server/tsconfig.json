@@ -8,12 +8,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
     "paths": {
       "@common/*": ["../common/*"],
-      "@src/*": ["src/*"],
-      "@infra/*": ["infrastructure/*"]
-    }
+      "@src/*": ["./src/*"],
+      "@infra/*": ["./infrastructure/*"]
+    },
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*", "infrastructure/**/*", "../common/**/*"],
   "exclude": ["node_modules", "dist"]
