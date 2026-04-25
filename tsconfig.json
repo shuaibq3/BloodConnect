@@ -7,12 +7,24 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "paths": {
-      "@common/*": ["common/*"],
-      "@server/*": ["server/src/*"],
-      "@client/*": ["client/src/*"]
-    }
+    "ignoreDeprecations": "6.0",
+    "types": [
+      "jest",
+      "node"
+    ]
   },
-  "include": ["common/**/*", "server/**/*", "client/**/*"],
-  "exclude": ["node_modules", "**/dist"]
+  "include": [
+    "common/**/*.ts",
+    "common/**/*.js",
+    "server/**/*.ts",
+    "server/**/*.js",
+    "client/**/*.ts",
+    "client/**/*.tsx",
+    "client/**/*.js",
+    "client/**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

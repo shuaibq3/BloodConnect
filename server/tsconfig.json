@@ -1,21 +1,30 @@
 {
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
     "outDir": "./dist",
-    "strict": true,
+    "rootDir": "..",
     "baseUrl": ".",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@common/*": ["../common/*"],
-      "@src/*": ["./src/*"],
-      "@infra/*": ["./infrastructure/*"]
+      "@bloodConnect/*": [
+        "./src/*"
+      ],
+      "@common/*": [
+        "../common/*"
+      ]
     },
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*", "infrastructure/**/*", "../common/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.js",
+    "infrastructure/**/*.ts",
+    "infrastructure/**/*.js",
+    "../common/**/*.ts",
+    "../common/**/*.js",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
